@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import static com.sun.org.apache.xalan.internal.lib.ExsltSets.distinct;
 
 public class WorkerImpl implements Worker {
     private final Library library;
@@ -37,8 +38,7 @@ public class WorkerImpl implements Worker {
     public List<Article> prepareArticles(List<Article> articles) {
         List<Article> result = articles
                 .stream()
-                .filter(this::isArticleCorrect)
-                .toList();
+                .filter(this::isArticleCorrect).distinct().collect(Collectors.toList()); // добавила для проверки на повторяющиеся статьи distinct().collect(Collectors.toList())
         result.forEach(this::prepareDate);
         return result;
     }
